@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi</title>
+  <link rel="stylesheet" href="/css/taxi_limousine/card-cars.css">
+  <link rel="stylesheet" href="/css/taxi/index3.css">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/taxi_limousine/popup.css">
+  <link href="Content/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsOWtgXYEONEyBQ9URt49vCOadtZf2fqs&libraries=places"></script>
+    <script src="/js/lang.js"></script>
+    <style>
+
+        .table {
+          display: flex;
+          position: relative;
+          margin: 20px auto;
+          justify-content: center;
+          align-items: center;
+          max-width: 100%;
+          max-height: 100%;
+        }
+    
+        #header th:last-child {
+          text-align: center;
+        }
+    
+        .table {
+          justify-content: center;
+          align-items: center;
+          max-width: 100%;
+        }
+    
+        #customers {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+    
+        #customers td,
+        #customers th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+    
+        #customers tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+    
+        #customers tr:hover {
+          background-color: #ddd;
+        }
+    
+        #customers th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #444;
+          ;
+          color: white;
+        }
+      </style>
+    
+    <script>
+  
+      // function switchlanguage(lang) {
+      //     var elements = document.getElementsByClassName('lang');
+      //     for (var i = 0; i < elements.length; i++) {
+      //       elements[i].innerHTML = translations[lang][elements[i].id];
+      //     }
+      //   }
+      //   var translations = {
+      //     'en': {
+      //       'home': 'HOME',
+      //       'about': 'ABOUT',
+      //       'contact': 'CONTACT',
+      //       'taxi' : 'TAXI METER',
+      //       'btn4' : 'CALCULATE'
+      //     },
+      //     'th': {
+      //       'home': 'หน้าแรก',
+      //       'about': 'เกี่ยวกับ',
+      //       'contact': 'ติดต่อ'
+      //     }
+      //   }
+    </script>
+  </head>
+  <body onload="calcRoute();">
+    <section class="navbar">
+      <div class="logo">
+    
+      </div>
+      <ul>
+        <li><a href="index.html" id="home" class="lang">หน้าแรก</a></li>
+        <li><a href="" id="about" class="lang">เกี่ยวกับ</a></li>
+        <li><a href="" id="contact" class="lang">ติดต่อ</a></li>
+        <button style="background-color: transparent; border: none; border-right: 2px solid black; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('en')">EN</button>
+      <button style="background-color: transparent;  border: none; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('th')">ไทย</button>
+      </ul>
+    </section>
+    <header class="header2">
+    </header>
+    <section class="main">
+        <table id="customers" class="table">
+            <tr id="header">
+              <th class="lang" id="name">ชื่อ</th>
+              <th class="lang" id="place">สถานที่ให้บริการ</th>
+              <th class="lang" id="tel">เบอร์โทร</th>
+            </tr>
+            <tr>
+              <td>Phuket Taxi Meter</td>
+              <td>สนามบินภูเก็ต</td>
+              <td>088-1110-171</td>
+        </div>
+        </td>
+        </tr>
+        <tr>
+          <td>Taxi Meter Services 24hr.</td>
+          <td>ภูเก็ต และพื้นที่ใกล้ๆ</td>
+          <td>095-257-7277</td>
+        </tr>
+        <tr>
+          <td>Phuket Taxi Meter Service</td>
+          <td>สนามบินภูเก็ต</td>
+          <td>082-595-6491</td>
+  
+        </tr>
+        <tr>
+          <td>Get Phuket Taxi</td>
+          <td>ภูเก็ต และพื้นที่ใกล้ๆ</td>
+          <td>099-113-3171</td>
+        
+        </tr>
+        <tr>
+          <td>TAXI METER ALL THAILAND SERVICE.</td>
+          <td>สนามบินภูเก็ต และทั่วทุกจังหวัด</td>
+          <td>081-8893-277</td>
+       
+        </tr>
+        <tr>
+          <td>Alex Taxi Phuket & Tour Co., Ltd</td>
+          <td>เทศบาลนครภูเก็ต</td>
+          <td>099-369-4422</td>
+         
+        </tr>
+        <tr>
+          <td>Phuket Transfer Travel Andaman (หจก.ภูเก็ต ทรานสเฟอร์ อันดามัน)</td>
+          <td>เทศบาลนครภูเก็ต</td>
+          <td>061-292-1330</td>
+          
+        </tr>
+        <tr>
+          <td>Phuket Private driver by Srisawat tour and travel</td>
+          <td>ตำบล วิชิต ตำบล รัษฎา และพื้นที่ใกล้ๆ</td>
+          <td>088-448-4592</td>
+          
+        </tr>
+        <tr>
+          <td>Friendly taxi & tour Phuket</td>
+          <td>ตำบลป่าตอง</td>
+          <td>087-267-9016</td>
+         
+        </tr>
+        <tr>
+          <td>นิ๊กกี้ ภูเก็ต แท็กซี่</td>
+          <td>ท่าอากาศยานภูเก็ต</td>
+          <td>099-252-5422</td>
+         
+        </tr>
+        <tr>
+          <td>Anny Taxi Phuket</td>
+          <td>ตำบล กะทู้ ตำบลป่าตอง</td>
+          <td>093-580-4939</td>
+         
+        </tr>
+        <tr>
+          <td>PHUKET TAXI PRIVATE</td>
+          <td>ตำบล กมลา และพื้นที่ใกล้ๆ</td>
+          <td>087-624-6130</td>
+        </tr>
+        <tr>
+          <td>Phuket Taxi Service</td>
+          <td>จังหวัดภูเก็ต</td>
+          <td>087-557-8081</td>
+         
+        </tr>
+        <tr>
+          <td>PHUKET BEST TAXI DRIVER</td>
+          <td>ตำบลเชิงทะเล</td>
+          <td>095-965-4143</td>
+          
+        </tr>
+        <tr>
+          <td>Phuket Airport Transfer to Phatong</td>
+          <td>สนามบินภุเก็ต , ป่าตอง</td>
+          <td>089-078-6220</td>
+          
+        </tr>
+        <tr>
+          <td>Taxi friendly chalong</td>
+          <td>ตำบล ฉลอง</td>
+          <td>082-418-8891</td>
+          
+        </tr>
+        <tr>
+          <td>ACE's Phuket Transfers & Tours</td>
+          <td>เทศบาลนครภูเก็ต กระบี่ และพื้นที่ใกล้ๆ</td>
+          <td>086-597-4549</td>
+          
+        </tr>
+        </table>
+
+    </section>
+    <footer>
+      <p>&copy; 2023</p>
+    </footer>
+   <script>
+    const initialLang = localStorage.getItem('lang') || 'en';
+changeLanguage(initialLang);
+    </script>
+
+    <script src="/js/lang.js"></script>
+  </body>
+</html>

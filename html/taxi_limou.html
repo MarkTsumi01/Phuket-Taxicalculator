@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi&Limousine</title>
+  <link rel="stylesheet" href="/css/taxi_limousine/card-cars.css">
+  <link rel="stylesheet" href="/css/taxi_limousine/index2.css">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/taxi_limousine/popup.css">
+  <link href="Content/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsOWtgXYEONEyBQ9URt49vCOadtZf2fqs&libraries=places"></script>
+    <script src="/js/lang.js"></script>
+    <!-- <script>
+      function switchLanguage(lang) {
+          var elements = document.getElementsByClassName('lang');
+          for (var i = 0; i < elements.length; i++) {
+            elements[i].innerHTML = translations[lang][elements[i].id];
+          }
+        }
+        var translations = {
+          'en': {
+            'home': 'HOME',
+            'about': 'ABOUT',
+            'contact': 'CONTACT',
+            'foreign': 'FOREIGN',
+            'taxi' : 'TAXI',
+            'limousine' : 'LIMOUSINE',
+            'btn2' : 'CALCULATE',
+            'btn3' : 'SHOW ROUTE',
+            'destination' : 'DESTINATION',
+            'price' : 'PRICE',
+            'unit' : 'UNIT',
+            'detail' : 'DETAIL',
+            'btn' : 'MAP'
+          },
+          'th': {
+            'home': 'หน้าแรก',
+            'about': 'เกี่ยวกับ',
+            'contact': 'ติดต่อ'
+          }
+        }
+    </script> -->
+  <style>
+    .table {
+      display: flex;
+      position: relative;
+      margin: 0 auto;
+      justify-content: center;
+      align-items: center;
+      max-width: fit-content;
+      max-height: fit-content;
+    }
+
+    #btn{
+      padding: 10px;
+      font-size: 13px;
+      cursor: pointer;
+      text-align: center;
+      text-decoration: none;
+      outline: none;
+      color: white;
+      background-color: #444;
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 7px #999;
+    }
+
+    #header th:last-child {
+      text-align: center;
+    }
+
+    .table {
+      justify-content: center;
+      align-items: center;
+      max-width: 100%;
+    }
+
+    #customers {
+      font-family: Arial, Helvetica, sans-serif;
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    #customers td,
+    #customers th {
+      border: 1px solid #ddd;
+      padding: 8px;
+    }
+
+    #customers tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    #customers tr:hover {
+      background-color: #ddd;
+    }
+
+    #customers th {
+      padding-top: 12px;
+      padding-bottom: 12px;
+      text-align: left;
+      background-color: #444;
+      ;
+      color: white;
+    }
+  </style>
+
+  </head>
+  <body onload="calcRoute();">
+    <section class="navbar">
+      <div class="logo">
+  
+      </div>
+      <ul>
+        <li><a href="index.html" id="home" class="lang">หน้าแรก</a></li>
+        <li><a href="" id="about" class="lang">เกี่ยวกับ</a></li>
+        <li><a href="" id="contact" class="lang">ติดต่อ</a></li>
+        <button style="background-color: transparent; border: none; border-right: 2px solid black; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('en')">EN</button>
+        <button style="background-color: transparent;  border: none; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('th')">ไทย</button>
+      </ul>
+    </section>
+    <header class="header2">
+    </header>
+    <section class="main">
+      <label class="card">
+        <input class="card__input" type="checkbox" name="progress" id="progress1" value="1" tabIndex="1"
+          onClick="ckChange(this); enable();" />
+        <div class="card__body">
+          <div class="card__body-cover"><img class="card__body-cover-image" src="/pictures/taxi.png" /><span
+              class="card__body-cover-checkbox">
+              <svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
+                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+              </svg></span></div>
+          <header class="card__body-header">
+            <center>
+              <h1 id="taxi" class="lang">รถแท็กซี่</h1>
+            </center>
+          </header>
+        </div>
+        <button class="lang" id="btn2" disabled="true" value="TAXI METER" name="Taxi meter">คำนวณราคา</button>
+      </label>
+      <label class="card2">
+        <input class="card__input" type="checkbox" name="progress" id="progress2" value="1" tabIndex="1"
+          onClick="ckChange(this); enable2();" />
+        <div class="card__body">
+          <div class="card__body-cover"><img class="card__body-cover-image" src="/pictures/limousine.png" width="100%"
+              height="100px" style="object-fit: cover;" /><span class="card__body-cover-checkbox">
+              <svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
+                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+              </svg></span></div>
+          <header class="card__body-header">
+            <center>
+              <h1 id="limousine" class="lang">รถลีมูซีน</h1>
+            </center>
+          </header>
+        </div>
+        <button class="lang" id="btn3" disabled="true" value="LIMOUSINE" name="Limousine">ดูปลายทาง</button>
+      </label>
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <div id="googleMap"></div>
+          <div class="outputall">
+          <div class="output11">
+            <div style="font-size:16px"  id="output"></div>
+            <div style="font-size:16px" id="output2"></div>
+            <div style="width: 100%;"><button class="lang" id="information" style="display: block; height: 50px;  padding: 10px; margin-top: 80px; margin-left: auto; margin-right: auto; font-size: 14px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: white; background-color: #444; border: none; border-radius: 15px; box-shadow: 0 7px #999;" onclick="goInformation();">ข้อมูลเพิ่มเติม</button>
+            </div>
+          </div>
+        </div>
+        <span class="close">&times;</span>
+      </div>
+    </div>
+      <div id="myModal2" class="modal2">
+        <div class="modal-content2">
+          <span class="close2">&times;</span>
+          <table id="customers" class="table">
+            <tr id="header">
+              <th class="lang" id="destination">ปลายทาง</th>
+              <th class="lang" id="price">ราคา</th>
+              <th class="lang" id="unit">หน่วย</th>
+              <th class="lang" id="detail">รายละเอียดเส้นทาง</th>
+            </tr>
+            <tr>
+              <td>Patong Beach</td>
+              <td>699</td>
+              <td>Baht</td>
+              <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Patong Beach, ตำบลป่าตอง อำเภอกะทู้ ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+              </td>
+        </div>
+        </td>
+        </tr>
+        <tr>
+          <td>Mai Khao Beach</td>
+          <td>699</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+            <button class="lang" id="btn" type="button" value="Mai Khao Beach, ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>kalim beach</td>
+          <td>699</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+           <button  class="lang" id="btn" type="button" value="Kalim Beach, ตำบล กะทู้ อำเภอกะทู้ ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Naithonburi beach</td>
+          <td>699</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Nai Thon Beach, ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Bangtao beach</td>
+          <td>699</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Bangtao Beach, อำเภอถลาง ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Ao Por Viewpoint Pa Klok, Thalang District, Phuket </td>
+          <td>699</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+            <button class="lang" id="btn" type="button" value="Ao Por Viewpoint ตำบล ป่าคลอก อำเภอถลาง ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Tri Trang Beach</td>
+          <td>799</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Tri Trang Beach, ตำบลป่าตอง อำเภอกะทู้ ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Surin beach</td>
+          <td>799</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Surin Beach, ตำบลเชิงทะเล ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Kata beach</td>
+          <td>799</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+            <button class="lang" id="btn" type="button" value="Kata Beach, ตำบล กะรน ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Kamala beach</td>
+          <td>799</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Kamala Beach, ตำบล กมลา ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Karon Beach</td>
+          <td>799</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Karon Beach, ตำบล กะรน ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Cape Panwa </td>
+          <td>899</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+            <button class="lang" id="btn" type="button" value="Cape Panwa, ตำบล วิชิต อำเภอเมืองภูเก็ต ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Rawai Beach </td>
+          <td>899</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Rawai Beach, ตำบล ราไวย์ อ เมืองภูเก็ต, ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Kata noi beach</td>
+          <td>899</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Kata Noi Beach, ตำบล กะรน อำเภอเมืองภูเก็ต ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Chalong Bay</td>
+          <td>899</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Chalong Bay Rum Distillery, Soi 2, ตำบล ฉลอง Amphur Muang, ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Nai Harn Beach</td>
+          <td>899</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Nai Harn Beach, ตำบล ราไวย์ อำเภอเมืองภูเก็ต ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>laem ka beach</td>
+          <td>899</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Laem Ka Beach, ตำบล ราไวย์ อำเภอเมืองภูเก็ต ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        <tr>
+          <td>Friendship Beach</td>
+          <td>899</td>
+          <td>Baht</td>
+          <td style="text-align: center;">
+                <button class="lang" id="btn" type="button" value="Friendship Beach, ตำบล ราไวย์ อำเภอเมืองภูเก็ต ภูเก็ต ประเทศไทย" onclick="goToNextPage(this.value)"><i class='fas fa-car-alt'></i>แสดงแผนที่</button>
+          </td>
+        </tr>
+        </table>
+      </div>
+    </div>
+    </section>
+    <footer>
+      <p>&copy; 2023</p>
+    </footer>
+    <script>
+      function ckChange(ckType) {
+        var ckName = document.getElementsByName(ckType.name);
+        var checked = document.getElementById(ckType.id);
+
+        if (checked.checked) {
+          for (var i = 0; i < ckName.length; i++) {
+
+            if (!ckName[i].checked) {
+              ckName[i].disabled = true;
+            } else {
+              ckName[i].disabled = false;
+            }
+          }
+        }
+        else {
+          for (var i = 0; i < ckName.length; i++) {
+            ckName[i].disabled = false;
+          }
+        }
+      }
+    </script>
+    <script>
+      function enable() {
+        var check = document.getElementById("progress1");
+        var btn = document.getElementById("btn2");
+        if (check.checked) {
+          btn.removeAttribute("disabled");
+        } else {
+          btn.disabled = "true";
+        }
+      }
+      function enable2() {
+        var check = document.getElementById("progress2");
+        var btn = document.getElementById("btn3");
+        if (check.checked) {
+          btn.removeAttribute("disabled");
+        } else {
+          btn.disabled = "true";
+        }
+      }
+    </script>
+    <script>
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("btn2");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on the button, open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    </script>
+    <script>
+      var modal2 = document.getElementById("myModal2");
+
+      // Get the button that opens the modal
+      var btn2 = document.getElementById("btn3");
+
+      // Get the <span> element that closes the modal
+      var span2 = document.getElementsByClassName("close2")[0];
+
+      // When the user clicks on the button, open the modal
+      btn2.onclick = function () {
+        modal2.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span2.onclick = function () {
+        modal2.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal2) {
+          modal2.style.display = "none";
+        }
+      }
+    </script>
+    <script>
+      function goToNextPage(buttonValue) {
+        window.location.href = "limuresult.html?buttonValue=" + buttonValue;
+      }
+    </script>
+    <script>
+    const initialLang = localStorage.getItem('lang') || 'en';
+changeLanguage(initialLang);
+    </script>
+    <script>
+      function goInformation() {
+        window.location.href = "taxi_information.html";
+      }    
+      </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/onload.js"></script>
+    <script src="/js/lang.js"></script>
+  </body>
+
+</html>

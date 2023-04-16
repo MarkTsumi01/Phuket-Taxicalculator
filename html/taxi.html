@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi</title>
+  <link rel="stylesheet" href="/css/taxi_limousine/card-cars.css">
+  <link rel="stylesheet" href="/css/taxi/index3.css">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/taxi_limousine/popup.css">
+  <link href="Content/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsOWtgXYEONEyBQ9URt49vCOadtZf2fqs&libraries=places"></script>
+    <script src="/js/lang.js"></script>
+  </head>
+  <body onload="calcRoute();">
+    <section class="navbar">
+      <div class="logo">
+        Project
+      </div>
+      <ul>
+        <li><a href="index.html" id="home" class="lang">หน้าแรก</a></li>
+        <li><a href="" id="about" class="lang">เกี่ยวกับ</a></li>
+        <li><a href="" id="contact" class="lang">ติดต่อ</a></li>
+        <button style="background-color: transparent; border: none; border-right: 2px solid black; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('en')">EN</button>
+      <button style="background-color: transparent;  border: none; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('th')">ไทย</button>
+      </ul>
+    </section>
+    <header class="header2">
+    </header>
+    <section class="main">
+      <label class="card">
+        <input class="card__input" type="checkbox" name="progress" id="progress1" value="1" tabIndex="1"
+          onClick="ckChange(this); enable();" />
+        <div class="card__body">
+          <div class="card__body-cover"><img class="card__body-cover-image" src="/pictures/taxi.png" /><span
+              class="card__body-cover-checkbox">
+              <svg class="card__body-cover-checkbox--svg" viewBox="0 0 12 10">
+                <polyline points="1.5 6 4.5 9 10.5 1"></polyline>
+              </svg></span></div>
+          <header class="card__body-header">
+            <center>
+              <h1 id="taxi" class="lang">รถแท็กซี่</h1>
+            </center>
+          </header>
+        </div>
+        <button class="lang" id="btn4" disabled="true" value="TAXI METER" name="Taxi meter">คำนวณราคา</button>
+      </label>
+      <div id="myModal" class="modal">
+        <div class="modal-content">
+          <div id="googleMap"></div>
+          <div class="output11">
+            <div style="font-size:16px"  id="output"></div>
+            <div style="font-size:16px" id="output2"></div>
+          </div>
+          <div>
+            <span class="close">&times;</span>
+            <button class="lang" id="information" style="display: block; height: 50px; margin-top: 510px; width: 200px; padding: 10px; font-size: 14px; cursor: pointer; text-align: center; text-decoration: none; outline: none; color: white; background-color: #444; border: none; border-radius: 15px; box-shadow: 0 7px #999;" onclick="goInformation();">ข้อมูลเพิ่มเติม</button>
+          </div>
+          </div>
+        </div>
+    </section>
+      </div>
+    </section>
+    <footer>
+      <p>&copy; 2023</p>
+    </footer>
+    <script>
+      function ckChange(ckType) {
+        var ckName = document.getElementsByName(ckType.name);
+        var checked = document.getElementById(ckType.id);
+
+        if (checked.checked) {
+          for (var i = 0; i < ckName.length; i++) {
+
+            if (!ckName[i].checked) {
+              ckName[i].disabled = true;
+            } else {
+              ckName[i].disabled = false;
+            }
+          }
+        }
+        else {
+          for (var i = 0; i < ckName.length; i++) {
+            ckName[i].disabled = false;
+          }
+        }
+      }
+    </script>
+    <script>
+      function enable() {
+        var check = document.getElementById("progress1");
+        var btn = document.getElementById("btn4");
+        if (check.checked) {
+          btn.removeAttribute("disabled");
+        } else {
+          btn.disabled = "true";
+        }
+      }
+      function enable2() {
+        var check = document.getElementById("progress2");
+        var btn = document.getElementById("btn2");
+        if (check.checked) {
+          btn.removeAttribute("disabled");
+        } else {
+          btn.disabled = "true";
+        }
+      }
+    </script>
+    <script>
+      var modal = document.getElementById("myModal");
+
+      // Get the button that opens the modal
+      var btn = document.getElementById("btn4");
+
+      // Get the <span> element that closes the modal
+      var span = document.getElementsByClassName("close")[0];
+
+      // When the user clicks on the button, open the modal
+      btn.onclick = function () {
+        modal.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span.onclick = function () {
+        modal.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal) {
+          modal.style.display = "none";
+        }
+      }
+    </script>
+    <script>
+      var modal2 = document.getElementById("myModal2");
+
+      // Get the button that opens the modal
+      var btn2 = document.getElementById("btn2");
+
+      // Get the <span> element that closes the modal
+      var span2 = document.getElementsByClassName("close2")[0];
+
+      // When the user clicks on the button, open the modal
+      btn2.onclick = function () {
+        modal2.style.display = "block";
+      }
+
+      // When the user clicks on <span> (x), close the modal
+      span2.onclick = function () {
+        modal2.style.display = "none";
+      }
+
+      // When the user clicks anywhere outside of the modal, close it
+      window.onclick = function (event) {
+        if (event.target == modal2) {
+          modal2.style.display = "none";
+        }
+      }
+    </script>
+    <script>
+      function goToNextPage(buttonValue) {
+        window.location.href = "limuresult.html?buttonValue=" + buttonValue;
+      }
+    </script>
+    <script>
+      const request = JSON.parse(localStorage.getItem("request"));
+        //  console.log(request.origin);
+        //  console.log(request.destination);
+        //  console.log(request.travelMode);
+        //  console.log(request.unitSystem);
+    </script>
+   <script>
+    const initialLang = localStorage.getItem('lang') || 'en';
+changeLanguage(initialLang);
+    </script>
+     <script>
+      function goInformation() {
+        window.location.href = "taxi_information.html";
+      }    
+      </script>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="/js/index.js"></script>
+    <script src="/js/onload.js"></script>
+    <script src="/js/lang.js"></script>
+  </body>
+</html>

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Taxi</title>
+  <link rel="stylesheet" href="/css/taxi_limousine/card-cars.css">
+  <link rel="stylesheet" href="/css/taxi/index3.css">
+  <link rel="stylesheet" href="/css/normalize.css">
+  <link rel="stylesheet" href="/css/taxi_limousine/popup.css">
+  <link href="Content/bootstrap.min.css" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <script src="https://kit.fontawesome.com/ab2155e76b.js" crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="css/bootstrap.min.css"
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous" />
+  <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAsOWtgXYEONEyBQ9URt49vCOadtZf2fqs&libraries=places"></script>
+    <script src="/js/lang.js"></script>
+    <style>
+
+        .table {
+          display: flex;
+          position: relative;
+          margin: 20px auto;
+          justify-content: center;
+          align-items: center;
+          max-width: 100%;
+          max-height: 100%;
+        }
+    
+        #header th:last-child {
+          text-align: center;
+        }
+    
+        .table {
+          justify-content: center;
+          align-items: center;
+          max-width: 100%;
+        }
+    
+        #customers {
+          font-family: Arial, Helvetica, sans-serif;
+          border-collapse: collapse;
+          width: 100%;
+        }
+    
+        #customers td,
+        #customers th {
+          border: 1px solid #ddd;
+          padding: 8px;
+        }
+    
+        #customers tr:nth-child(even) {
+          background-color: #f2f2f2;
+        }
+    
+        #customers tr:hover {
+          background-color: #ddd;
+        }
+    
+        #customers th {
+          padding-top: 12px;
+          padding-bottom: 12px;
+          text-align: left;
+          background-color: #444;
+          ;
+          color: white;
+        }
+      </style>
+    
+  </head>
+  <body onload="calcRoute();">
+    <section class="navbar">
+      <div class="logo">
+      
+      </div>
+      <ul>
+        <li><a href="index.html" id="home" class="lang">หน้าแรก</a></li>
+        <li><a href="" id="about" class="lang">เกี่ยวกับ</a></li>
+        <li><a href="" id="contact" class="lang">ติดต่อ</a></li>
+        <button style="background-color: transparent; border: none; border-right: 2px solid black; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('en')">EN</button>
+      <button style="background-color: transparent;  border: none; font-size: 15px; font-weight: 600; cursor: pointer; " onclick="changeLanguage('th')">ไทย</button>
+      </ul>
+    </section>
+    <header class="header2">
+    </header>
+    <section class="main">
+        <table id="customers" class="table">
+            <tr id="header">
+              <th class="lang" id="name">ชื่อ</th>
+              <th class="lang" id="tel">เบอร์โทร</th>
+              <th class="lang" id="link">ลิงก์เว็บไซต์</th>
+            </tr>
+            <tr>
+              <td>Phuket Luxury Transfers</td>
+              <td>062-2426-477</td>
+              <td><a href="https://plt.limo/th/">Learn-more</a></td>
+             
+        </div>
+        </td>
+        </tr>
+        <tr>
+          <td>Vecay Phuket</td>
+          <td>0815551117</td>
+          <td><a href="https://m5.gs/T3ZDWW">Learn-more</a></td>
+         
+        </tr>
+        <tr>
+          <td>Phuket trip</td>
+          <td>087-672-7266</td>
+          <td><a href="https://www.phuket-trips.com/th/airport-transfer.html">Learn-more</a></td>
+        </tr>
+        <tr>
+          <td>interconyiental Phuket resort </td>
+          <td>076 629 999</td>
+          <td><a href="https://phuket.intercontinental.com/th/offer/limousine-services">Learn-more</a></td>
+
+        </tr>
+        <tr>
+          <td>friendly taxi and Tour Phuket </td>
+          <td>0872679016</td>
+          <td><a href="https://m5.gs/QVRGRX">Learn-more</a></td>
+
+        </tr>
+        <tr>
+          <td>limousine & ลีมูซีนภูเก็ต</td>
+          <td>0923954414</td>
+          <td><a href="https://twitter.com/ple11061971">Learn-more</a></td>
+   
+        </tr>
+        <tr>
+          <td>True leasing</td>
+          <td>1279</td>
+          <td><a href="https://m5.gs/U1RWcW">Learn-more</a></td>
+
+        </tr>
+        <tr>
+          <td>klook </td>
+          <td>-</td>
+          <td><a href="https://m5.gs/dkhlTj">Learn-more</a></td>
+        </tr>
+       
+        </table>
+
+    </section>
+    <footer>
+      <p>&copy; 2023</p>
+    </footer>
+   <script>
+    const initialLang = localStorage.getItem('lang') || 'en';
+changeLanguage(initialLang);
+    </script>
+     
+    <script src="/js/lang.js"></script>
+  </body>
+</html>
