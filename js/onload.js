@@ -74,8 +74,8 @@ function calcRoute() {
             }
 
             // Display taxi fare
-            output.innerHTML = "ต้นทาง : "+request.origin + ".<br/> ปลายทาง : " + request.destination
-            output2.innerHTML = "<i class='fas fa-hourglass-start'></i> ระยะเวลา  : " + result.routes[0].legs[0].duration.text + "<br/> </div>" + `ระยะทาง = ${Kilometer.toFixed(2)} กิโลเมตร<br />ราคา = ${taxi.toFixed(2)} บาท`;
+            output.innerHTML = "<i class='fa-solid fa-location-dot' style='color: #179bee;'></i> ต้นทาง  : "+request.origin + ".<br/> <i class='fa-solid fa-location-dot' style='color: #f80d0d;'></i> ปลายทาง : " + request.destination
+            output2.innerHTML = "<i class='fas fa-hourglass-start'></i> ระยะเวลา  : " + result.routes[0].legs[0].duration.text + "<br/> </div>" + `ระยะทาง = ${Kilometer.toFixed(2)} กิโลเมตร <br/><i class='fa-regular fa-money-check-dollar' style='color: #16f343;'></i>ราคา : = ${taxi.toFixed(2)} บาท`;
             // Display route on map
             directionsDisplay.setDirections(result);
         } else {
